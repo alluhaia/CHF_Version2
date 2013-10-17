@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="max_chest_pain_no">10</integer>
+     <integer name="max_short_breathe_no">10</integer>
+     <integer name="max_fswallow_no">10</integer>
+     
+     
+</resources>
