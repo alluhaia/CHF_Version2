@@ -4,12 +4,14 @@ import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -43,6 +45,7 @@ public class MainActivity extends FragmentActivity implements
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
@@ -74,6 +77,47 @@ public class MainActivity extends FragmentActivity implements
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
+		
+		// if the notification clicked display the tab 
+		
+//		
+	    Intent in = getIntent();
+//	    
+	    if (getIntent().getExtras() != null) {
+	        String message = in.getStringExtra("message");
+//	        
+	        Intent intent;
+	     
+	        
+	        
+	        char c = message.charAt(0);
+	        
+	        switch (c){
+		        case 'R':
+		        // save the message in intent and pass it to the tab
+		        	intent = new Intent(this, Reminders.class);
+		        	   // Pass data to the new activity
+			        intent.putExtra("message", message);
+		        	
+		        	mViewPager.setCurrentItem(2);// dislay reminders tab
+		          break;
+		        case 'M':
+		        	
+		        	
+		            // save the message in intent and pass it to the tab
+		        	intent = new Intent(this, Messages.class);
+		        	   // Pass data to the new activity
+			        intent.putExtra("message", message);
+		          // Do stuff
+		  
+		         default:mViewPager.setCurrentItem(3);// dislay messages tab
+	        }
+	        
+	       
+	    }
+		
+		
+
 	}
 
 	@Override
@@ -130,13 +174,22 @@ public class MainActivity extends FragmentActivity implements
 								fragment.setArguments(args);
 								break;
 						case 2: 
-								fragment=new Medications();
+								fragment=new Reminders();
 								fragment.setArguments(args);
 								break;
 						case 3: 
 								fragment=new Messages();
 								fragment.setArguments(args);
 								break;
+						case 4: 
+							fragment=new Chart();
+							fragment.setArguments(args);
+							break;
+						
+						case 5: 
+							fragment=new VitalsInput();
+							fragment.setArguments(args);
+							break;	
 						default: 
 								fragment = new DummySectionFragment();
 						}
@@ -148,7 +201,7 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 5;
+			return 6;
 		}
 
 		@Override
@@ -166,6 +219,10 @@ public class MainActivity extends FragmentActivity implements
 				
 			case 4:
 				return getString(R.string.title_section5).toUpperCase(l);
+			
+			case 5:
+				return getString(R.string.title_section6).toUpperCase(l);
+				
 			}
 			return null;
 		}

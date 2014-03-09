@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-
 import com.example.chf_mock_1_db.Contact;
 import com.example.chf_mock_1_db.DatabaseHandler;
 import com.example.chf_mock_adapter.DiscussArrayAdapter;
@@ -15,7 +14,6 @@ import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
 
 import de.svenjacobs.loremipsum.LoremIpsum;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,8 +25,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 
-public class Messages extends Fragment {
-	
+public class Reminders extends Fragment {
 	private DiscussArrayAdapter adapter;
 	private ListView lv;
 	private LoremIpsum ipsum;
@@ -39,7 +36,7 @@ public class Messages extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.activity_discuss,
+		View rootView = inflater.inflate(R.layout.activity_reminder,
 				container, false);
 		random = new Random();
 		ipsum = new LoremIpsum();
@@ -52,102 +49,68 @@ public class Messages extends Fragment {
 		
 		Context context = getActivity().getApplicationContext();
 		
-		adapter = new DiscussArrayAdapter(context, R.layout.listitem_discuss);
+		adapter = new DiscussArrayAdapter(context, R.layout.listitem_reminder);
 
 		lv.setAdapter(adapter);
 
-		// get the notification message
-		
 		Intent i = getActivity().getIntent();
 		 
         String message = i.getStringExtra("message");
-        
-       // Log.d("message",message);
-        // clear the intent to remove the extra 
         i.removeExtra("message");
-//        i=null;
-        // add the message to DB
         DatabaseHandler db = new DatabaseHandler(context);
-        
-        /**
-         * CRUD Operations
-         * */
-        // Inserting Contacts
-        
-  
-        /**
-         * CRUD Operations
-         * */
-        // Inserting Contacts
+//        
+//        /**
+//         * CRUD Operations
+//         * */
+//        // Inserting Contacts
         if (message != "" && message != null) {
         	
         	String[] d=message.split(" ");
-        	if (d[0].equals("M")) {
-		        db.addContact(new Contact("message", message.substring(2)));
+        	if (d[0].equals("R")) {
+		        db.addContact(new Contact("reminder", message.substring(2)));
         	}
         }
 
-        
-
- 
-        // Reading all contacts
-        List<com.example.chf_mock_1_db.Contact> contacts = db.getContact("message"); 
+//     
+// 
+//        // Reading all contacts
+//        Log.d("Reading: ", "Reading all contacts..");
+        List<Contact> contacts = db.getContact("reminder");       
+// 
         Collections.reverse(contacts);
         for (Contact cn : contacts) {
             String log = "Id: "+cn.getID()+" ,Name: " + cn.getName() + " ,Phone: " + cn.getPhoneNumber();
                 // Writing Contacts to log
-            adapter.add(new OneComment(false, cn.getPhoneNumber()));
+          
+            addItems(cn.getPhoneNumber());
         
         }
 //        
-   
+// 
+//        
+//        Log.d("Reading: ", "Reading all contacts.."); 
 
-        
-		
-		
-		//editText1 = (EditText) rootView.findViewById(R.id.editText1);
-      //============ 
-		
-      		// Initialize a tracker using a Google Analytics property ID.
-      		Tracker tracker = GoogleAnalytics.getInstance(getActivity()).getTracker("UA-45989172-1");
-      		
-      		HashMap<String, String> hitParameters = new HashMap<String, String>();
-      		hitParameters.put(Fields.HIT_TYPE, "appview");
-      		hitParameters.put(Fields.SCREEN_NAME, "Messages");
+        //================================
+ 		Tracker tracker = GoogleAnalytics.getInstance(getActivity()).getTracker("UA-45989172-1");
+  		
+  		HashMap<String, String> hitParameters = new HashMap<String, String>();
+  		hitParameters.put(Fields.HIT_TYPE, "appview");
+  		hitParameters.put(Fields.SCREEN_NAME, "Reminders");
 
-      		tracker.send(hitParameters);
-      		
-      		//============
-      		
+  		tracker.send(hitParameters);
+		
+        //================================
 
+		
 		return rootView;
 	}
 
-	private void addItems() {
+	private void addItems(String message) {
 		
-		//adapter.add(new OneComment(false, "Hello bubbles!"));
+		adapter.add(new OneComment(true, message));
 
 	}
 
 	
-	
-	/**
-	 * When orientation changes, we need to report in to the Activity. 
-	 */
-	@Override
-	public void onAttach(Activity activity) {
-		
-	
-		super.onAttach(activity);
-	}
-	
-	
 
-
-
-	
-	
-	
 }
-
-	

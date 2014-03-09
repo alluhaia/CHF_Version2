@@ -2,167 +2,205 @@ package com.example.chf_mock_1;
 
 
 
-import com.example.chf_mock_1_notification.NotificationReceiver;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
+
+import com.example.chf_mock_1_postrequest.MakeRequest;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.MapBuilder;
+import com.google.analytics.tracking.android.Tracker;
+import com.google.android.gcm.GCMRegistrar;
 
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 
+	
+	
+	
 	/**
 	   * Set Project Number of your Google APIs Console Project.
 	   */
+	// the server URL for register product
+	public static final String URL = "http://134.173.236.110/dashboard/patientreg.aspx";
+	//  PROJECT_NUMBER from google console
 	public static final String PROJECT_NUMBER = "68488464113";
-    protected static final int REQUEST_TEXT = 1;
+	// variable to hold phone number from preference
     protected static String phoneNoFromPrefernce=null;
+    // for debug purposes
     private static final String TAG = "LOGIN_ACTIVITY";
+    // file name for storing patient number 
     private static String PREF_NAME="PatientPhone";
+    // a resource to hold the settings file
 	SharedPreferences settings; 
-
+	
+	private GoogleAnalytics myInstance;
+	private Tracker tracker;
     
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        
+       
+        // set the preference file
         final SharedPreferences shared = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 
+    	/*
+		 * 
+		 * register the device
+		 * 
+		 */
+		
         
-       // settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        GCMRegistrar.checkDevice(this);
+        GCMRegistrar.checkManifest(this);
         
-     // if the phone number already stored in the default then skip this activity
-    	
-        shared.edit().remove("phone").commit();
-        phoneNoFromPrefernce = shared.getString("phone", null);
-    	
+        GCMRegistrar.register(LoginActivity.this,GCMIntentService.SENDER_ID);
+        // get the registeration id and send it o sever with phone
+            
+        
+        final Context context = getApplicationContext();
+		phoneNoFromPrefernce = (shared.getString("phone", ""));
+        
     
-    	
-    	Log.d(TAG, "phone from preference : "+phoneNoFromPrefernce);
-    	// notification test
-    	Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-		
-		// intent triggered, you can add other intent for other actions
-		Intent intent = new Intent(LoginActivity.this, NotificationReceiver.class);
-		PendingIntent pIntent = PendingIntent.getActivity(LoginActivity.this, 0, intent, 0);
-		
-		// this is it, we'll build the notification!
-		// in the addAction method, if you don't want any icon, just set the first param to 0
-		Notification mNotification = new Notification.Builder(this)			
-			.setContentTitle("New Post!")
-			.setContentText("Here's an awesome update for you!")
-			.setSmallIcon(R.drawable.ninja)
-			.setContentIntent(pIntent)
-			.setSound(soundUri)
-			.setStyle(new Notification.BigTextStyle().bigText("You're doing a great job!"))
-			.addAction(R.drawable.ninja, "View", pIntent)
-			.addAction(0, "Remind", pIntent)
-			
-			.build();
-		
-		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-		// If you want to hide the notification after it was selected, do the code below
-		// myNotification.flags |= Notification.FLAG_AUTO_CANCEL;
-		
-		notificationManager.notify(0, mNotification);
-    	
-    	//
     	
 		final Intent myIntent= new Intent(getBaseContext(),MainActivity.class);		
     	
-        
-    	//if (phoneNo==null) {
-    		// store the phone that user has entered
-    		
-    		
-    	
-    	
-        
-    		Button  submit=(Button) findViewById(R.id.phone_submit_button);
-	        submit.setOnClickListener(new OnClickListener(){
-	        	
-	        	
-	        	
-	        	@Override
-	        	public void onClick(View v) {
-	        		// compare the phone to what we have
-	        		
-	        		// save the phone number
-	        		TextView phoneText=(TextView)findViewById(R.id.editText1);
-	        		
-	        		phoneNoFromPrefernce=phoneText.getText().toString();
-	        		
-	       //     	
-	        		Log.d(TAG, "phone from preference : "+phoneNoFromPrefernce);
-	        		SharedPreferences.Editor editor = shared.edit(); 
-	        		editor.putString("phone", phoneNoFromPrefernce);
-                    System.out.println("Here is the phone "+phoneNoFromPrefernce);
-                    editor.commit();
-	        		
-	        		// call 
-	        		
-	        		//LoginActivity.this.startActivityForResult(myIntent, REQUEST_TEXT);
-                    startActivity(myIntent);
-	        	}
-	        		
-	        });
-    	//}
-    	
+		// see if the phone is already there 
+		
+		
+		
+	     // if the phone number already stored in the default then skip this activity
+			if (phoneNoFromPrefernce.equals(null)
+					|| phoneNoFromPrefernce.equals("")) {
+			    		
+			    		
+				Button  submit=(Button) findViewById(R.id.phone_submit_button);
+		        submit.setOnClickListener(new OnClickListener(){
+		        	
+		        	
+		        	
+		        	@Override
+		        	public void onClick(View v) {
+		        		// compare the phone to what we have
+		        		// validate phone number from server
+		        		
+		        		
+		        		 Tracker easyTracker = EasyTracker.getInstance(context);		        		
+		        		easyTracker.send(MapBuilder
+		        			      .createEvent("UX", "appstart", null, null)
+		        			      .set(Fields.SESSION_CONTROL, "start")
+		        			      .build()
+		        			    );
+		        		
+		        		// save the phone number
+		        		TextView phoneText=(TextView)findViewById(R.id.editText1);
+		        		
+		        		
+		        		phoneNoFromPrefernce=phoneText.getText().toString();
+		        		
+		        		if (phoneNoFromPrefernce.isEmpty()==false){
+			        		// get the registeration id
+			        		Context context = getApplicationContext();
+			        		SharedPreferences shared2 = context.getSharedPreferences("RegisterationID",0);
+							String reg_id = (shared2.getString("registeration_id", ""));
+					
+			        		
+			        		Map<String, String> map = new HashMap<String, String>();
+			        		map.put("t", phoneNoFromPrefernce);
+			        		map.put("reg_id", reg_id);
+			        	
+			        		
+			        		
+			        		try {
+								MakeRequest mr= new MakeRequest();
+								String result=mr.MakeRequest(URL, map);
+								
+								// test if the result true then continue otherwise exit with error message
+								
+							
+								String[] r=result.split("-");
+								
+								if (r[0].toString().equals("False")) {
+									
+									CharSequence text = "Oops,,, something went wrong!";
+									int duration = Toast.LENGTH_LONG;
+	
+									Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+									toast.show();
+									//startActivity(myIntent);
+								} else {
+									
+						    		// store the phone that user has entered
+	
+					        		SharedPreferences.Editor editor = shared.edit(); 
+					        		editor.putString("phone", phoneNoFromPrefernce);
+//				                    System.out.println("Here is the phone "+phoneNoFromPrefernce);
+				                    editor.commit();
+					        		
+				                    startActivity(myIntent);
+				                    finish();
+								}
+								
+								
+							} catch (ClientProtocolException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (ExecutionException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+		        		
+		        		} else {
+			        		
+		        			CharSequence text = "Please enter your 10 digits phone number!";
+							int duration = Toast.LENGTH_LONG;
+
+							Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+							toast.show();
+			        	}
+		        		
+		        	}
+		        	
+		        		
+		        });
+		        
+			} else {
+				
+				 startActivity(myIntent);
+				 finish();
+			}
+				
+	
     	
     }
 
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	if(requestCode == REQUEST_TEXT) {
-    		if(resultCode == Activity.RESULT_OK) {
-    			 
-//    		        TextView tvName=(TextView) findViewById(R.id.name_text);
-//    		        TextView tvAddress=(TextView) findViewById(R.id.address_text);
-//    		        TextView tvCity=(TextView) findViewById(R.id.city_text);
-//    		        TextView tvState=(TextView) findViewById(R.id.state_text);
-//    		        TextView tvPhone=(TextView) findViewById(R.id.phone_text);
-    		        
-    		     
-    		       // Bundle b = data.getExtras();
-//    		        if(b!=null)
-//    		        {
-//    		        	tvName.setText(b.get("name").toString());
-//    		        	tvAddress.setText(b.get("address").toString());
-//    		        	tvCity.setText(b.get("city").toString());
-//    		        	tvState.setText(b.get("state").toString());
-//    		        	tvPhone.setText(b.get("phone").toString());
-    		          
-    		            
-    		           
-    		       // }
-    		        
-    			
-    			
-    			
-    		}
-    	}
-    	
-		super.onActivityResult(requestCode, resultCode, data);
-	}
-	
-	
 	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

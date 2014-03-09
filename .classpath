@@ -6,5 +6,7 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry exported="true" kind="lib" path="libs/gcm-server.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/loremipsum-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/libGoogleAnalyticsServices.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

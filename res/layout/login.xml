@@ -16,7 +16,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginTop="50dip"
-            android:text="@string/phone_label" />
+            android:text="@string/phone_label"
+             />
         
     </LinearLayout>
 
@@ -25,7 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="phone" >
+        android:inputType="phone"
+        android:maxLength="10" >
 
         <requestFocus />
     </EditText>

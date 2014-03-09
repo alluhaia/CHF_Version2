@@ -9,6 +9,6 @@ package com.example.chf_mock_1;
 
 public final class Manifest {
     public static final class permission {
-        public static final String C2D_MESSAGE="com.example.gcm.permission.C2D_MESSAGE";
+        public static final String C2D_MESSAGE="com.example.chf_mock_1.permission.C2D_MESSAGE";
     }
 }
