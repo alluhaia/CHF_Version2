@@ -49,6 +49,12 @@ public class Vitals extends Fragment {
 				container, false);
 
 		//============ 
+		//test if there is internet connection first
+		
+		boolean checkConntection = new CheckInternetConnection().checkInternetConnection(getActivity());
+		
+		if (checkConntection == true ) { 
+		
 		
 		// Initialize a tracker using a Google Analytics property ID.
 		Tracker tracker = GoogleAnalytics.getInstance(getActivity()).getTracker("UA-45989172-1");
@@ -196,7 +202,7 @@ public class Vitals extends Fragment {
 			   }
 			});
 		
-		
+		}
 
 		return rootView;
 	}

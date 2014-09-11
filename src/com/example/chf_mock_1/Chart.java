@@ -36,7 +36,10 @@ public class Chart extends Fragment {
 		
 		webView = (WebView) rootView.findViewById(R.id.webView1);
 		webView.getSettings().setJavaScriptEnabled(true);
+        //================================
+        boolean checkConntection = new CheckInternetConnection().checkInternetConnection(context);
 		
+		if (checkConntection == true ) { 
 		
 		webView.loadUrl("http://134.173.236.110/dashboard/PhoneView.aspx?t="+phone);
 		
@@ -53,7 +56,7 @@ public class Chart extends Fragment {
 				
 				//============
 				
-		
+		}
 
 		return rootView;
 	}

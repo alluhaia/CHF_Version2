@@ -109,6 +109,10 @@ public class Messages extends Fragment {
       //============ 
 		
       		// Initialize a tracker using a Google Analytics property ID.
+        //================================
+        boolean checkConntection = new CheckInternetConnection().checkInternetConnection(context);
+		
+		if (checkConntection == true ) { 
       		Tracker tracker = GoogleAnalytics.getInstance(getActivity()).getTracker("UA-45989172-1");
       		
       		HashMap<String, String> hitParameters = new HashMap<String, String>();
@@ -118,7 +122,7 @@ public class Messages extends Fragment {
       		tracker.send(hitParameters);
       		
       		//============
-      		
+		}
 
 		return rootView;
 	}

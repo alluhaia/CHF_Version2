@@ -1,8 +1,10 @@
 package com.example.chf_mock_1;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -204,6 +206,10 @@ public class Symptoms extends Fragment {
       
        //============ 
  		
+         //================================
+         boolean checkConntection = new CheckInternetConnection().checkInternetConnection(getActivity());
+ 		
+ 		if (checkConntection == true ) { 
  		// Initialize a tracker using a Google Analytics property ID.
  		tracker = GoogleAnalytics.getInstance(getActivity()).getTracker("UA-45989172-1");
  		
@@ -291,10 +297,13 @@ public class Symptoms extends Fragment {
 
 						            // set the date, time and info sent in sharred prefernce
 						            Calendar c = Calendar.getInstance();
-
+						            
+						            
+						            Log.d("date","Here date"+c.get(Calendar.MONTH));
+						          
 						            String sDate = c.get(Calendar.YEAR) + "-" 
-						            + c.get(Calendar.MONTH)
-						            + "-" + c.get(Calendar.DAY_OF_MONTH) 
+						            + String.valueOf(c.get(Calendar.MONTH)+1)
+						            + "-" + c.get(Calendar.DAY_OF_MONTH)
 						            + " at " + c.get(Calendar.HOUR_OF_DAY) 
 						            + ":" + c.get(Calendar.MINUTE);
 						            // put that in textview
@@ -304,7 +313,7 @@ public class Symptoms extends Fragment {
 						           
 					        		
 					        		// display information on top
-					        		 Info = "Thank you\nYour Symptoms was sent on "+ sDate;
+					        		 Info = "Thank you\nYour Symptoms were sent on "+ sDate;
 					    			 
 					    			 Info =Info + "\n Chest Pain: "+ seekBarValue.getText().toString();
 					    			 Info =Info + "\n Waking up at night: "+ selectedRadioBreathe;
@@ -353,7 +362,7 @@ public class Symptoms extends Fragment {
 //	        		}
 	        	
          });	
-    
+ 		}
 		return rootView;
 	}	
 

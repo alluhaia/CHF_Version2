@@ -91,14 +91,17 @@ public class Reminders extends Fragment {
 //        Log.d("Reading: ", "Reading all contacts.."); 
 
         //================================
- 		Tracker tracker = GoogleAnalytics.getInstance(getActivity()).getTracker("UA-45989172-1");
-  		
+        boolean checkConntection = new CheckInternetConnection().checkInternetConnection(context);
+		
+		if (checkConntection == true ) { 
+			Tracker tracker = GoogleAnalytics.getInstance(getActivity()).getTracker("UA-45989172-1");
+	
   		HashMap<String, String> hitParameters = new HashMap<String, String>();
   		hitParameters.put(Fields.HIT_TYPE, "appview");
   		hitParameters.put(Fields.SCREEN_NAME, "Reminders");
 
   		tracker.send(hitParameters);
-		
+		}
         //================================
 
 		

@@ -62,18 +62,7 @@ public class LoginActivity extends Activity {
         // set the preference file
         final SharedPreferences shared = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 
-    	/*
-		 * 
-		 * register the device
-		 * 
-		 */
-		
-        
-        GCMRegistrar.checkDevice(this);
-        GCMRegistrar.checkManifest(this);
-        
-        GCMRegistrar.register(LoginActivity.this,GCMIntentService.SENDER_ID);
-        // get the registeration id and send it o sever with phone
+    	
             
         
         final Context context = getApplicationContext();
@@ -83,15 +72,31 @@ public class LoginActivity extends Activity {
     	
 		final Intent myIntent= new Intent(getBaseContext(),MainActivity.class);		
     	
-		// see if the phone is already there 
+		// check if there is Internet connection
 		
+		boolean checkConntection = new CheckInternetConnection().checkInternetConnection(context);
 		
+		if (checkConntection == true ) { 
 		
 	     // if the phone number already stored in the default then skip this activity
 			if (phoneNoFromPrefernce.equals(null)
 					|| phoneNoFromPrefernce.equals("")) {
 			    		
-			    		
+			    	
+				/*
+				 * 
+				 * register the device
+				 * 
+				 */
+				
+		        
+		        GCMRegistrar.checkDevice(this);
+		        GCMRegistrar.checkManifest(this);
+		        
+		        GCMRegistrar.register(LoginActivity.this,GCMIntentService.SENDER_ID);
+		        // get the registeration id and send it o sever with phone
+		        
+				
 				Button  submit=(Button) findViewById(R.id.phone_submit_button);
 		        submit.setOnClickListener(new OnClickListener(){
 		        	
@@ -196,7 +201,7 @@ public class LoginActivity extends Activity {
 				 startActivity(myIntent);
 				 finish();
 			}
-				
+		}		
 	
     	
     }
