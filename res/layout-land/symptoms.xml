@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+<LinearLayout 
+   
+    android:gravity="center_horizontal"
+     android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+<!-- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" > -->
+ 
+ <!--  <TextView
+        android:id="@+id/lastSympInfo_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:gravity="center"
+        android:text="@string/lastSympInfo_label" />
+ -->
+<LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_marginTop="30dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/q_label" />
+
+    </LinearLayout>
+
+<TextView
+    android:id="@+id/q1_label"
+    android:layout_width="228dp"
+    android:layout_height="wrap_content"
+    android:text="@string/q1_label" />
+
+<SeekBar
+    android:id="@+id/seekBar1"
+    android:layout_width="254dp"
+    android:layout_height="wrap_content"
+    android:max="@integer/max_chest_pain_no" />
+
+    <TextView
+        android:id="@+id/chest_pain_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/chest_pain_slider_text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/q2_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/q2_label" />
+
+       <RadioGroup
+        android:id="@+id/radioBreathe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+       
+
+    <RadioButton
+        android:id="@+id/RadioButton02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/med_no_radio" />
+     <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/med_yes_radio" />
+	</RadioGroup>
+       
+    <TextView
+        android:id="@+id/q3_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/q3_label" />
+	
+     <SeekBar
+        android:id="@+id/seekBar2"
+        android:layout_width="254dp"
+        android:layout_height="wrap_content"
+        android:max="@integer/max_short_breathe_no" />
+
+     <TextView
+         android:id="@+id/fatigue_text"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="@string/fatigue_text"
+         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+   <TextView
+       android:id="@+id/q4_label"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="@string/q4_label" />
+  
+    <SeekBar
+        android:id="@+id/seekBar3"
+        android:layout_width="254dp"
+        android:layout_height="wrap_content"
+        android:max="@integer/max_fswallow_no" />
+
+    <TextView
+        android:id="@+id/breathe_pain_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/breathe_pain_text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/q5_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/q5_label" />
+    </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/seekBar4"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:max="@integer/max_fswallow_no" />
+
+        <TextView
+            android:id="@+id/swallow_feet_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/swallow_feet_text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/q6_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/q6_label" />
+        
+
+    
+	  <RadioGroup
+        android:id="@+id/radioMed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:orientation="horizontal">
+    <RadioButton
+        android:id="@+id/RadioButton01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/med_no_radio" />
+
+    <RadioButton
+        android:id="@+id/radioButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/med_yes_radio" />
+ </RadioGroup>
+ 
+	   <TextView
+         android:id="@+id/comment_input"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:gravity="top|center_horizontal"
+         android:text="@string/comment_input_label"
+         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+      <EditText
+          android:id="@+id/comment_input_text"
+          android:layout_width="167dp"
+          android:layout_height="wrap_content"
+          android:inputType="text"
+          android:text="@string/comment_textedit_text" 
+          android:maxLength="200">
+           
+        </EditText>   
+	  
+	  
+	  
+    <Button
+        android:id="@+id/symptoms_submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/symptoms_submit_button" />
+
+</LinearLayout>
+</ScrollView>
