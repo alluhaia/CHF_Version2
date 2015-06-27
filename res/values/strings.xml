@@ -8,9 +8,10 @@
     <string name="title_section1">VITALS</string>
     <string name="title_section2">SYMPTOMS</string>
     <string name="title_section3">REMINDERS</string>
-    <string name="title_section4">MESSAGES</string>
-    <string name="title_section5">CHART</string>
-    <string name="title_section6">INPUT</string>
+    <string name="title_section4">CHART</string>
+    <string name="title_section5">INPUT</string>
+    <string name="title_section6">CHAT</string>
+     <string name="title_section7">Device Setting</string>
     <string name="weight_label">Weight 120 lb</string>
 	<string name="looking_for_tracks">Looking for information...</string>
 	<string name="sending">Sending...</string>
@@ -47,6 +48,10 @@
 	<string name="heart_rate_input_label">Heart Rate</string>
 	<string name="vital_input_submit">Submit</string>	
 	<string name="glucose_info_label"></string>
+	
+	<string name="comment_input_label">More Information</string>
+	<string name="comment_textedit_text"></string>
+	
 	
 	
 </resources>

@@ -47,7 +47,7 @@ public class Symptoms extends Fragment {
 	private String Info;
 
 	// server URL to send the symptoms
-	public static String PATIENT_API_URL = "http://134.173.236.110/dashboard/PatientSymptoms.aspx";
+	public static String PATIENT_API_URL = "http://134.173.236.50/cguchf/PatientSymptoms.aspx";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +57,7 @@ public class Symptoms extends Fragment {
 		// the info textview
 		 
 			 
-		 
+		 Log.d("before contact in symptoms", "FirstXXX");
 		 
 		// chest pain seek bar +textview
          SeekBar sb = (SeekBar)rootView.findViewById(R.id.seekBar1);
@@ -206,6 +206,13 @@ public class Symptoms extends Fragment {
       
        //============ 
  		
+         //The new more information box
+         final TextView glucoseText=(TextView) rootView.findViewById(R.id.comment_input_text);
+ 		
+ 		
+         
+			
+         
          //================================
          boolean checkConntection = new CheckInternetConnection().checkInternetConnection(getActivity());
  		
@@ -228,7 +235,8 @@ public class Symptoms extends Fragment {
 	        	
 	        	@Override
 	        	public void onClick(View v) {
-	        		
+	    			final String more_info=glucoseText.getText().toString();
+
 	        		Context context = getActivity().getApplicationContext();
 	        		SharedPreferences shared = context.getSharedPreferences("PatientPhone",0);
 					String phone = (shared.getString("phone", ""));
@@ -236,7 +244,9 @@ public class Symptoms extends Fragment {
 					String selectedRadioBreathe = ((RadioButton)rootView.findViewById(rg.getCheckedRadioButtonId() )).getText().toString();
 					// medication
 					String selectedRadioMedication = ((RadioButton)rootView.findViewById(rgm.getCheckedRadioButtonId() )).getText().toString();
-									
+					// clean the input in  more info textEdit
+					
+					
 			         
 	        		// put inputs in a mp and sent it to makerequest class
 	        		Map<String, String> map = new HashMap<String, String>();
@@ -247,6 +257,7 @@ public class Symptoms extends Fragment {
 	        		map.put("breathe", seekBar3Value.getText().toString());
 	        		map.put("swollen", seekBar4Value.getText().toString());
 	        		map.put("take_medication", selectedRadioMedication);
+	        		map.put("more_info", more_info.replaceAll("[^a-zA-Z0-9]", " "));
 	        		
 //	        		//before sending make sure all questions has been answered 
         		
@@ -321,6 +332,7 @@ public class Symptoms extends Fragment {
 					    			 Info =Info + "\n Short of Breathe: "+ seekBar3Value.getText().toString();
 					    			 Info =Info + "\n Swollen feet: "+ seekBar4Value.getText().toString();
 					    			 Info =Info + "\n Taking Medication: "+ selectedRadioMedication;
+					    			 Info =Info + "\n More Information: "+ more_info;
 					    			 
 							         alertDialog.setMessage(Info);
 

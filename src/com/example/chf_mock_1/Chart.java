@@ -28,7 +28,8 @@ public class Chart extends Fragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.webview_chart,
 				container, false);
-		
+		 Log.d("before contact in chart", "FirstXXX");
+
 		//get the patient phone number from reference
 		Context context = getActivity().getApplicationContext();
 		SharedPreferences shared = context.getSharedPreferences("PatientPhone",0);
@@ -41,7 +42,7 @@ public class Chart extends Fragment {
 		
 		if (checkConntection == true ) { 
 		
-		webView.loadUrl("http://134.173.236.110/dashboard/PhoneView.aspx?t="+phone);
+		webView.loadUrl("http://134.173.236.50/cguchf/PhoneView.aspx?t="+phone);
 		
 		//============ 
 		

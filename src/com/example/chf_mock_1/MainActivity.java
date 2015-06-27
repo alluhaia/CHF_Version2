@@ -1,5 +1,6 @@
 package com.example.chf_mock_1;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 import android.app.ActionBar;
@@ -64,6 +65,15 @@ public class MainActivity extends FragmentActivity implements
 					@Override
 					public void onPageSelected(int position) {
 						actionBar.setSelectedNavigationItem(position);
+						
+						
+//						 if(position == 3 ) {
+////						        Reminders frg = (Reminders)mSectionsPagerAdapter.instantiateItem(mViewPager, position);
+////						        frg.onResume(); 
+//						    }
+//						
+//						Log.d("here","OKOK");
+				
 					}
 				});
 
@@ -90,28 +100,14 @@ public class MainActivity extends FragmentActivity implements
 	     
 	        
 	        
-	        char c = message.charAt(0);
-	        
-	        switch (c){
-		        case 'R':
+	     
 		        // save the message in intent and pass it to the tab
 		        	intent = new Intent(this, Reminders.class);
 		        	   // Pass data to the new activity
 			        intent.putExtra("message", message);
 		        	
 		        	mViewPager.setCurrentItem(2);// dislay reminders tab
-		          break;
-		        case 'M':
-		        	
-		        	
-		            // save the message in intent and pass it to the tab
-		        	intent = new Intent(this, Messages.class);
-		        	   // Pass data to the new activity
-			        intent.putExtra("message", message);
-		          // Do stuff
-		  
-		         default:mViewPager.setCurrentItem(3);// dislay messages tab
-	        }
+		     
 	        
 	       
 	    }
@@ -151,9 +147,13 @@ public class MainActivity extends FragmentActivity implements
 	 */
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+		
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
 		}
+		
+		
+		
 
 		@Override
 		public Fragment getItem(int position) {
@@ -177,19 +177,26 @@ public class MainActivity extends FragmentActivity implements
 								fragment=new Reminders();
 								fragment.setArguments(args);
 								break;
+						
 						case 3: 
-								fragment=new Messages();
-								fragment.setArguments(args);
-								break;
-						case 4: 
 							fragment=new Chart();
 							fragment.setArguments(args);
 							break;
 						
-						case 5: 
+						case 4: 
 							fragment=new VitalsInput();
 							fragment.setArguments(args);
 							break;	
+						case 5: 
+							fragment=new Chat();
+							fragment.setArguments(args);
+							break;	
+							
+						case 6: 
+							fragment=new Setting();
+							fragment.setArguments(args);
+							break;	
+							
 						default: 
 								fragment = new DummySectionFragment();
 						}
@@ -201,7 +208,7 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 6;
+			return 7;
 		}
 
 		@Override
@@ -222,6 +229,9 @@ public class MainActivity extends FragmentActivity implements
 			
 			case 5:
 				return getString(R.string.title_section6).toUpperCase(l);
+				
+			case 6:
+				return getString(R.string.title_section7).toUpperCase(l);
 				
 			}
 			return null;

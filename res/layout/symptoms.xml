@@ -171,11 +171,37 @@
         android:layout_height="wrap_content"
         android:text="@string/med_yes_radio" />
  </RadioGroup>
+ 
+	   
+
+     <TextView
+         android:id="@+id/comment_input"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:gravity="top|center_horizontal"
+         android:text="@string/comment_input_label"
+         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+      <EditText
+          android:id="@+id/comment_input_text"
+          android:layout_width="167dp"
+          android:layout_height="wrap_content"
+          android:inputType="text|textAutoCorrect"
+          android:text="@string/comment_textedit_text" 
+          android:maxLength="200">
+           
+        </EditText>   
+	  
     <Button
         android:id="@+id/symptoms_submit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/symptoms_submit_button" />
+    
+    
+   
+    
+    
 
 </LinearLayout>
 </ScrollView>
